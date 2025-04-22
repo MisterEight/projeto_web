@@ -1,0 +1,89 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Cabeçalho */
+header h1 {
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+/* Grid de personagens na introdução */
+.character-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+.character {
+    text-align: center;
+    width: 200px;
+    margin-bottom: 20px;
+}
+.character-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.character h3 {
+    margin: 0.5em 0 0.2em;
+}
+
+/* Seções */
+#introSection, #quizSection, #resultSection {
+    margin-bottom: 20px;
+}
+
+/* Perguntas do quiz */
+.question {
+    margin-bottom: 15px;
+}
+.question p {
+    font-weight: bold;
+    margin: 0.5em 0;
+}
+.question label {
+    display: block;
+    margin: 2px 0;
+}
+
+/* Botões */
+button {
+    font-size: 1em;
+}
+#startBtn, #submitBtn, #restartBtn {
+    background-color: #5a5a5a;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#startBtn:hover, #submitBtn:hover, #restartBtn:hover {
+    background-color: #333;
+}
+#startBtn, #submitBtn {
+    display: block;
+    margin: 20px auto;
+}
+
+/* Seção de resultado */
+#resultSection {
+    text-align: center;
+}
+#resultSection h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+#resultSection p {
+    font-size: 1.1em;
+    margin: 0.5em 0 1em;
+}
