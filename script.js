@@ -57,17 +57,17 @@ const personagens = {
     Frodo: new Character(
         "Frodo Bolseiro",
         "Um hobbit do Condado que herdou o Um Anel e assumiu a missão de destruí-lo, mostrando coragem mesmo sendo vulnerável.",
-        "https://upload.wikimedia.org/wikipedia/commons/3/3c/Frodo_by_Mark_Ferrari.jpg"
+        "https://pm1.aminoapps.com/6339/f74d4fc38afeb5b253faeac526f88c2d5beb60a0_00.jpg"
     ),
     Aragorn: new Character(
         "Aragorn",
         "Um Guardião do Norte, herdeiro de Isildur e futuro rei que lidera com sabedoria e bravura na luta contra o mal.",
-        "https://upload.wikimedia.org/wikipedia/commons/a/a6/Aragorn_II.jpg"
+        "https://static.wikia.nocookie.net/lotr/images/c/ce/King_Aragorn.PNG"
     ),
     Legolas: new Character(
         "Legolas",
         "Um príncipe élfico da Floresta das Trevas, exímio arqueiro de visão aguçada e grande aliado na Sociedade do Anel.",
-        "https://upload.wikimedia.org/wikipedia/commons/1/1f/Legolas-02.jpg"
+        "https://i.pinimg.com/564x/07/31/37/0731379032530492cec0984f06bf1318.jpg"
     )
 };
 
