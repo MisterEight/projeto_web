@@ -29,8 +29,9 @@ header h1 {
     margin-bottom: 20px;
 }
 .character-img {
-    max-width: 100%;
-    height: auto;
+    width: 200px;  /* Define uma largura fixa para todas as imagens */
+    height: 300px; /* Define uma altura fixa para todas as imagens */
+    object-fit: cover; /* Garante que a imagem seja redimensionada proporcionalmente para preencher o espaço */
     border-radius: 8px;
 }
 .character h3 {
