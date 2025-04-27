@@ -82,9 +82,8 @@ button:hover {
     background-color: #cc9a1f;
 }
 
-/* Formulário do quiz */
 #quizSection {
-    text-align: center;
+    text-align: left;
 }
 .question {
     margin-bottom: 20px;
@@ -116,6 +115,15 @@ button:hover {
     font-size: 1.1em;
     margin: 0.5em 0;
     color: #ddd;
+}
+
+#resultSection img.character-img {
+    width: 100%;
+    max-width: 300px; /* Ajuste conforme necessário */
+    height: auto;
+    object-fit: cover; /* Garante que a imagem preencha o container sem distorcer */
+    border-radius: 8px;
+    border: 2px solid #f4c542;
 }
 
 #startBtn {
