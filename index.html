@@ -14,7 +14,7 @@
 
     <!-- Seção de introdução com descrição e botão de início -->
     <section id="introSection">
-        <p>O universo de <strong>O Senhor dos Anéis</strong> se passa na Terra-média, um mundo cheio de raças fantásticas (Hobbits, Elfos, Anões, Homens) unidas na luta contra o mal de Sauron e seu <em>Um Anel</em>. <!--&#8203;:contentReference[oaicite:13]{index=13}--> 
+        <p>O universo de <strong>O Senhor dos Anéis</strong> se passa na Terra-média, um mundo cheio de raças fantásticas (Hobbits, Elfos, Anões, Homens) unidas na luta contra o mal de Sauron e seu <em>Um Anel</em>.
         Prepare-se para descobrir qual personagem desse mundo épico você seria respondendo ao nosso quiz de 10 perguntas!</p>
         <h2>Personagens do Quiz</h2>
         <div class="character-grid">
@@ -40,9 +40,13 @@
     <!-- Seção do questionário (inicialmente oculta) -->
     <section id="quizSection" style="display: none;">
         <h2>Questionário</h2>
-        <form id="quizForm">
+        <div id="questionContainer">
             <!-- As perguntas serão inseridas aqui via JavaScript -->
-        </form>
+        </div>
+        <div id="navigationButtons">
+            <button id="prevBtn" disabled>Anterior</button>
+            <button id="nextBtn">Próximo</button>
+        </div>
         <button id="submitBtn">Enviar Respostas</button>
     </section>
 

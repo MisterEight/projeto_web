@@ -77,6 +77,7 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-family: 'Georgia', serif;
+    margin: 5px; /* Adiciona margem para separar os botões */
 }
 button:hover {
     background-color: #cc9a1f;
@@ -118,6 +119,15 @@ button:hover {
     color: #ddd;
 }
 
+#resultSection img.character-img {
+    width: 100%;
+    max-width: 300px; /* Ajuste conforme necessário */
+    height: auto;
+    object-fit: cover; /* Garante que a imagem preencha o container sem distorcer */
+    border-radius: 8px;
+    border: 2px solid #f4c542;
+}
+
 #startBtn {
     background-color: #f4c542;
     color: white;
@@ -147,9 +157,10 @@ button:hover {
         font-size: 2.5em;
     }
     button {
-        width: 100%;
+        width: auto; /* Permite que os botões se alinhem horizontalmente */
         padding: 14px 0;
         font-size: 1.2em;
+        margin: 5px; /* Adiciona margem para separar os botões */
     }
 }
 
