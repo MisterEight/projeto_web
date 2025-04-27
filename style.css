@@ -116,6 +116,16 @@ button:hover {
     font-size: 1.1em;
     margin: 0.5em 0;
     color: #ddd;
+    
+}
+
+#resultSection img.character-img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #f4c542;
 }
 
 #startBtn {

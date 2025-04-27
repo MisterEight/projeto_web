@@ -1,4 +1,6 @@
-// Classe para representar um Personagem (POO)
+// Atualização do script para mostrar uma pergunta por vez e ajuste do estilo
+
+// Classe para representar um Personagem
 class Character {
     constructor(nome, descricao, imagem) {
         this.nome = nome;
@@ -8,37 +10,27 @@ class Character {
     }
 }
 
-// Classe para gerenciar o Quiz (contém perguntas, personagens e lógica de cálculo)
+// Classe para gerenciar o Quiz
 class Quiz {
     constructor(perguntas, personagens) {
         this.perguntas = perguntas;
         this.personagens = personagens;
+        this.respostasUsuario = [];
+        this.perguntaAtual = 0;
     }
 
-    // Calcula a pontuação de cada personagem com base nas respostas selecionadas
     calcularPontuacoes() {
-        // Reinicia pontuações antes de somar (para caso de reinício)
         for (let nome in this.personagens) {
             this.personagens[nome].pontuacao = 0;
         }
-        // Percorre todas as perguntas
-        for (let i = 0; i < this.perguntas.length; i++) {
-            const pergunta = this.perguntas[i];
-            // Seleciona a opção marcada pelo usuário para esta pergunta
-            const seletor = `input[name="q${i}"]:checked`;
-            const respostaSelecionada = document.querySelector(seletor);
-            if (respostaSelecionada) {
-                const indiceResposta = parseInt(respostaSelecionada.value);
-                const pontos = pergunta.respostas[indiceResposta].pontos;
-                // Adiciona os pontos de cada personagem referentes a essa resposta
-                for (let nome in pontos) {
-                    this.personagens[nome].pontuacao += pontos[nome];
-                }
+        for (let i = 0; i < this.respostasUsuario.length; i++) {
+            const pontos = this.perguntas[i].respostas[this.respostasUsuario[i]].pontos;
+            for (let nome in pontos) {
+                this.personagens[nome].pontuacao += pontos[nome];
             }
         }
     }
 
-    // Retorna o personagem com a maior pontuação total
     obterPersonagemResultado() {
         let personagemVencedor = null;
         let maiorPontos = -Infinity;
@@ -155,99 +147,102 @@ const perguntas = [
     }
 ];
 
-// Cria instância do Quiz com as perguntas e personagens definidos
 const quiz = new Quiz(perguntas, personagens);
 
-// Função para exibir o questionário na tela (dinamicamente cria os elementos das perguntas)
-function exibirQuestionario() {
+function exibirPergunta() {
     const quizForm = document.getElementById('quizForm');
-    quizForm.innerHTML = '';  // limpa conteúdo anterior (se houver)
-    // Adiciona cada pergunta e suas opções ao formulário
-    perguntas.forEach((pergunta, indice) => {
-        // Container da pergunta
-        const divPergunta = document.createElement('div');
-        divPergunta.className = 'question';
-        // Texto da pergunta
-        const textoPergunta = document.createElement('p');
-        textoPergunta.textContent = (indice + 1) + '. ' + pergunta.texto;
-        divPergunta.appendChild(textoPergunta);
-        // Opções da pergunta
-        pergunta.respostas.forEach((resp, idx) => {
-            const label = document.createElement('label');
-            const input = document.createElement('input');
-            input.type = 'radio';
-            input.name = 'q' + indice;
-            input.value = idx;
-            label.appendChild(input);
-            // adiciona o texto da opção após o input
-            label.appendChild(document.createTextNode(' ' + resp.texto));
-            // adiciona a opção ao container da pergunta
-            divPergunta.appendChild(label);
-            divPergunta.appendChild(document.createElement('br'));
-        });
-        quizForm.appendChild(divPergunta);
+    quizForm.innerHTML = '';
+
+    const pergunta = quiz.perguntas[quiz.perguntaAtual];
+
+    const divPergunta = document.createElement('div');
+    divPergunta.className = 'question';
+    divPergunta.style.textAlign = 'left';
+    divPergunta.style.margin = '0 auto';
+    divPergunta.style.maxWidth = '600px';
+
+    const textoPergunta = document.createElement('p');
+    textoPergunta.textContent = (quiz.perguntaAtual + 1) + '. ' + pergunta.texto;
+    divPergunta.appendChild(textoPergunta);
+
+    pergunta.respostas.forEach((resp, idx) => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'resposta';
+        input.value = idx;
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(' ' + resp.texto));
+        divPergunta.appendChild(label);
+        divPergunta.appendChild(document.createElement('br'));
     });
+
+    quizForm.appendChild(divPergunta);
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.textContent = (quiz.perguntaAtual === quiz.perguntas.length - 1) ? 'Finalizar Quiz' : 'Próxima';
 }
 
-// Função para exibir o resultado do quiz (personagem correspondente) na tela
-function exibirResultado(personagem) {
+function avancarPergunta() {
+    const respostaSelecionada = document.querySelector('input[name="resposta"]:checked');
+
+    if (!respostaSelecionada) {
+        alert('Por favor, selecione uma resposta antes de continuar.');
+        return;
+    }
+
+    quiz.respostasUsuario.push(parseInt(respostaSelecionada.value));
+
+    if (quiz.perguntaAtual < quiz.perguntas.length - 1) {
+        quiz.perguntaAtual++;
+        exibirPergunta();
+    } else {
+        mostrarResultado();
+    }
+}
+
+function mostrarResultado() {
+    quiz.calcularPontuacoes();
+    const vencedor = quiz.obterPersonagemResultado();
+    
+    document.getElementById('quizSection').style.display = 'none';
+
     const resultSection = document.getElementById('resultSection');
-    resultSection.innerHTML = '';  // limpa resultado anterior
-    // Cria elementos de resultado: nome, imagem, descrição e pontuação
+    resultSection.innerHTML = '';
+
     const nomeElem = document.createElement('h2');
-    nomeElem.textContent = 'Você seria ' + personagem.nome + '!';
+    nomeElem.textContent = 'Você seria ' + vencedor.nome + '!';
+
     const imgElem = document.createElement('img');
-    imgElem.src = personagem.imagem;
-    imgElem.alt = personagem.nome;
+    imgElem.src = vencedor.imagem;
+    imgElem.alt = vencedor.nome;
     imgElem.className = 'character-img';
+
     const descElem = document.createElement('p');
-    descElem.textContent = personagem.descricao + ' (Pontuação: ' + personagem.pontuacao + ')';
+    descElem.textContent = vencedor.descricao + ' (Pontuação: ' + vencedor.pontuacao + ')';
+
     const restartBtn = document.createElement('button');
     restartBtn.id = 'restartBtn';
     restartBtn.textContent = 'Recomeçar Quiz';
-    // Adiciona elementos à seção de resultado
+
     resultSection.appendChild(nomeElem);
     resultSection.appendChild(imgElem);
     resultSection.appendChild(descElem);
     resultSection.appendChild(restartBtn);
-    // Exibe a seção de resultado
+
     resultSection.style.display = 'block';
 }
 
-// Evento de clique no botão "Começar Quiz"
 document.getElementById('startBtn').addEventListener('click', () => {
-    // Oculta a seção de introdução e exibe o questionário
     document.getElementById('introSection').style.display = 'none';
-    exibirQuestionario();
     document.getElementById('quizSection').style.display = 'block';
+    exibirPergunta();
 });
 
-// Evento de clique no botão "Enviar Respostas"
-document.getElementById('submitBtn').addEventListener('click', function() {
-    // Verifica se todas as perguntas foram respondidas
-    for (let i = 0; i < perguntas.length; i++) {
-        if (!document.querySelector(`input[name="q${i}"]:checked`)) {
-            alert('Por favor, responda todas as perguntas antes de enviar.');
-            return;
-        }
-    }
-    // Calcula pontuações e obtem o personagem vencedor
-    quiz.calcularPontuacoes();
-    const vencedor = quiz.obterPersonagemResultado();
-    if (vencedor) {
-        // Oculta o questionário e mostra o resultado
-        document.getElementById('quizSection').style.display = 'none';
-        exibirResultado(vencedor);
-    }
-});
+document.getElementById('submitBtn').addEventListener('click', avancarPergunta);
 
-// Evento de clique no botão "Recomeçar Quiz" (usamos delegação de evento pois ele é criado dinamicamente)
 document.addEventListener('click', function(e) {
     if (e.target && e.target.id === 'restartBtn') {
-        // Reseta o formulário (desmarca todas as opções)
-        document.getElementById('quizForm').reset();
-        // Oculta a seção de resultado e exibe novamente o questionário
-        document.getElementById('resultSection').style.display = 'none';
-        document.getElementById('quizSection').style.display = 'block';
+        location.reload();
     }
 });
